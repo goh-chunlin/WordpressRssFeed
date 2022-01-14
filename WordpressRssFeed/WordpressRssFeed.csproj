@@ -1,9 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageId>WordpressRssFeed</PackageId>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Description>A reusable codes library for reading Wordpress RSS feeds.</Description>
+		<Authors>Goh Chun Lin</Authors>
+		<Copyright>Copyright 2022, Goh Chun Lin</Copyright>
+		<PackageTags>Wordpress</PackageTags>
+		<Company>Goh Chun Lin</Company>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/goh-chunlin/WordpressRssFeed</RepositoryUrl>
+		<PackageReleaseNotes>Please refer to README.</PackageReleaseNotes>
+		
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
 
 </Project>
