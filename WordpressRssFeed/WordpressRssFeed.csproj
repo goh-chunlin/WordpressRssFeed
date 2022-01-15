@@ -18,6 +18,8 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		
 		<PackageIcon>logo.png</PackageIcon>
+	
+		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<ItemGroup>
