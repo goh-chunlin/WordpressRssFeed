@@ -1,4 +1,4 @@
-﻿[![Build status](https://gohchunlin.visualstudio.com/WordpressRssFeed/_apis/build/status/WordpressRssFeed-ASP.NET%20Core-CI)](https://gohchunlin.visualstudio.com/WordpressRssFeed/_build/latest?definitionId=18)
+﻿[![Build status](https://dev.azure.com/gohchunlin/WordpressRssFeed/_apis/build/status/WordpressRssFeed-ASP.NET%20Core-CI)](https://dev.azure.com/gohchunlin/WordpressRssFeed/_build/latest?definitionId=18)
 [![NuGet Release](https://img.shields.io/nuget/v/WordpressRssFeed.svg?label=WordpressRssFeed)](https://www.nuget.org/packages/WordpressRssFeed)
 
 ## 1. About
