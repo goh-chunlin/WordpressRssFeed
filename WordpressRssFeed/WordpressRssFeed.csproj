@@ -17,10 +17,15 @@
 		
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		
+		<PackageIcon>logo.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="" />
 	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="logo.png" Pack="true" Visible="false" PackagePath="" />
+    </ItemGroup>
 
 </Project>
