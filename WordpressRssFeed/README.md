@@ -8,15 +8,43 @@ This library is to retrieve the basic information of posts in a given Wordpress 
 ## 2. How to Use
 
 ```csharp
-var blogFeeds = new Reader().RetriveBlogFeeds("<Wordpress feed URL>");
+var blogChannel = new Reader().RetriveBlogFeeds("<Wordpress feed URL>");
 ```
 
-## 3. Release Notes
+The code above will return an object of `BlogChannel` which contains the following information.
+
+| Property | Data Type | Description  |
+|-|-|-|
+| Link | string | Absolute URL of the blog. |
+| Title | string | Title of the blog. |
+| Description | string | Description of the blog. |
+| BuiltAt | DateTimeOffSet | The last date and time this RSS feed is built at. |
+| Feeds | List<BlogFeed> | A list of BlogFeed objects for the articles in the blog. |
+
+## 3. BlogFeed
+
+The `BlogFeed` object contains the basic information as well as the content of an article (aka post) in the blog.
+Currently, it has the following properties.
+
+| Property | Data Type | Description  |
+|-|-|-|
+| Link | string | Absolute URL of the article. |
+| Title | string | Title of the article. |
+| Description | string | Full content of the article. |
+| PublishedAt | DateTimeOffSet |The date the article is published at. |
+| ThumbnailUrl | string | Absolute URL of the thumbnail used by the article. |
+
+## 4. Release Notes
+
+**22nd Jan 2022**
+
+- Return `BlogChannel` object instead of a list of `BlogFeed` objects so that blog info can be returned as well;
+- Corrected the way of parsing the datetime in the RSS feed.
 
 **14th Jan 2022**
 
 - Initial release.
 
-## 4. Feedback
+## 5. Feedback
 
 Bug reports and contributions are welcome at [Project Issues](https://github.com/goh-chunlin/WordpressRssFeed/issues).

@@ -1,40 +1,58 @@
 ﻿using System.Globalization;
 using System.Xml.Linq;
+using WordpressRssFeed.Enums;
+using WordpressRssFeed.Extensions;
 using WordpressRssFeed.Modals;
 
 namespace WordpressRssFeed
 {
     public class Reader
     {
-        public List<BlogFeed> RetriveBlogFeeds(string rssFeedUrl) 
+        string rssDateTimeFormat = "ddd, dd MMM yyyy HH:mm:ss zzz";
+
+        public BlogChannel RetriveBlogFeeds(string rssFeedUrl) 
         {
             XDocument xDoc = XDocument.Load(rssFeedUrl);
 
             XNamespace media = "http://search.yahoo.com/mrss/";
 
-            List<BlogFeed> blogFeeds = new List<BlogFeed>();
-            foreach (XElement i in xDoc.Descendants("item")) 
+            var channel = new BlogChannel();
+
+            var channelElement = xDoc.Descendants(XmlElement.Channel.XmlLabel()).FirstOrDefault();
+
+            if (channelElement != null)
+            {
+                channel.Link = channelElement.Element(XmlElement.Link.XmlLabel())?.Value;
+                channel.Title = channelElement.Element(XmlElement.Title.XmlLabel())?.Value;
+                channel.Description = channelElement.Element(XmlElement.Description.XmlLabel())?.Value;
+
+                if (channelElement.Element(XmlElement.BuiltAt.XmlLabel()) != null)
+                {
+                    channel.BuiltAt = DateTimeOffset.ParseExact(channelElement.Element(XmlElement.BuiltAt.XmlLabel())!.Value,
+                        rssDateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None);
+                }
+            }
+
+            foreach (XElement i in xDoc.Descendants(XmlElement.Item.XmlLabel())) 
             {
                 var newBlogFeed = new BlogFeed
                 {
-                    Id = i.Element("link")?.Value,
-                    Title = i.Element("title")?.Value,
-                    ThumbnailUrl = i.Descendants(media + "content").Where(img => img.Attribute("url") != null && !img.Attribute("url")!.Value.Contains("gravatar.com")).FirstOrDefault()?.Attribute("url")?.Value,
-                    Description = i.Element("description")?.Value
+                    Link = i.Element(XmlElement.Link.XmlLabel())?.Value,
+                    Title = i.Element(XmlElement.Title.XmlLabel())?.Value,
+                    ThumbnailUrl = i.Descendants(media + XmlElement.Content.XmlLabel()).Where(img => img.Attribute(XmlAttribute.Url.XmlLabel()) != null && !img.Attribute(XmlAttribute.Url.XmlLabel())!.Value.Contains("gravatar.com")).FirstOrDefault()?.Attribute(XmlAttribute.Url.XmlLabel())?.Value,
+                    Description = i.Element(XmlElement.Description.XmlLabel())?.Value
                 };
 
-                if (i.Element("pubDate") != null) 
+                if (i.Element(XmlElement.PublishedAt.XmlLabel()) != null) 
                 {
-                    newBlogFeed.PublishedAt = DateTimeOffset.ParseExact(
-                        i.Element("pubDate")!.Value.Replace("GMT", "+00:00"),
-                        "ddd, dd MMM yyyy HH:mm:ss zzz",
-                        CultureInfo.InvariantCulture);
+                    newBlogFeed.PublishedAt = DateTimeOffset.ParseExact(i.Element(XmlElement.PublishedAt.XmlLabel())!.Value,
+                        rssDateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None);
                 }
 
-                blogFeeds.Add(newBlogFeed);
+                channel.Feeds.Add(newBlogFeed);
             }
 
-            return blogFeeds;
+            return channel;
         }
     }
 }
